@@ -22,70 +22,13 @@ public class Tests
 
 
     [Test]
-    public void Test_Valid_Login_And_Title()
+    public void Test_Valid_Username_and_Valid_Password()
     {
-        driver.Url = "https://www.demo.guru99.com/V4/";
-        driver.FindElement(By.CssSelector("body > form > table > tbody > tr:nth-child(1) > td:nth-child(2) > input[type=text]")).SendKeys("mngr600014");
-        driver.FindElement(By.CssSelector("body > form > table > tbody > tr:nth-child(2) > td:nth-child(2) > input[type=password]")).SendKeys("sAdEtat");
-        driver.FindElement(By.CssSelector("body > form > table > tbody > tr:nth-child(3) > td:nth-child(2) > input[type=submit]:nth-child(1)")).Click();
-        var title = driver.Title;
-        Assert.That(title, Is.EqualTo("Guru99 Bank Manager HomePage"));
-  
-
-    }
-
-    [Test]
-    public void Test_Valid_Login_And_Manager_Id()
-    {
-        string username = "mngr600014";
-        driver.Url = "https://www.demo.guru99.com/V4/";
-        driver.FindElement(By.CssSelector("body > form > table > tbody > tr:nth-child(1) > td:nth-child(2) > input[type=text]")).SendKeys(username);
-        driver.FindElement(By.CssSelector("body > form > table > tbody > tr:nth-child(2) > td:nth-child(2) > input[type=password]")).SendKeys("sAdEtat");
-        driver.FindElement(By.CssSelector("body > form > table > tbody > tr:nth-child(3) > td:nth-child(2) > input[type=submit]:nth-child(1)")).Click();
-        var managerId = driver.FindElements(By.CssSelector("body > table > tbody > tr > td > table > tbody > tr.heading3 > td"))[0].Text;
-        Assert.That(managerId, Is.EqualTo("Manger Id : " + username));
-        var screenshot = ((ITakesScreenshot)driver).GetScreenshot();
-        string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-        string filePath = Path.Combine(desktopPath, "screenshot.png");
-        screenshot.SaveAsFile(filePath);
-
-
-    }
-
-    [Test]
-    public void Test_Invalid_Username_and_Valid_Password()
-    {
-        driver.Url = "https://www.demo.guru99.com/V4/";
-        driver.FindElement(By.CssSelector("body > form > table > tbody > tr:nth-child(1) > td:nth-child(2) > input[type=text]")).SendKeys("invalid");
-        driver.FindElement(By.CssSelector("body > form > table > tbody > tr:nth-child(2) > td:nth-child(2) > input[type=password]")).SendKeys("sAdEtat");
-        driver.FindElement(By.CssSelector("body > form > table > tbody > tr:nth-child(3) > td:nth-child(2) > input[type=submit]:nth-child(1)")).Click();
-        string expectedAlert = "User or Password is not valid";
-        Thread.Sleep(1000);
-        IAlert alert = driver.SwitchTo().Alert();
-        string alertText = alert.Text;
-        Assert.That(expectedAlert, Is.EqualTo(alertText));
-        alert.Accept();
-        var title = driver.Title;
-        Assert.That(title, Is.EqualTo("Guru99 Bank Home Page"));
-
-
-    }
-
-    [Test]
-    public void Test_Valid_Username_and_Invalid_Password()
-    {
-        driver.Url = "https://www.demo.guru99.com/V4/";
-        driver.FindElement(By.CssSelector("body > form > table > tbody > tr:nth-child(1) > td:nth-child(2) > input[type=text]")).SendKeys("mngr600014");
-        driver.FindElement(By.CssSelector("body > form > table > tbody > tr:nth-child(2) > td:nth-child(2) > input[type=password]")).SendKeys("invalid");
-        driver.FindElement(By.CssSelector("body > form > table > tbody > tr:nth-child(3) > td:nth-child(2) > input[type=submit]:nth-child(1)")).Click();
-        string expectedAlert = "User or Password is not valid";
-        Thread.Sleep(1000);
-        IAlert alert = driver.SwitchTo().Alert();
-        string alertText = alert.Text;
-        Assert.That(expectedAlert, Is.EqualTo(alertText));
-        alert.Accept();
-        var title = driver.Title;
-        Assert.That(title, Is.EqualTo("Guru99 Bank Home Page"));
+        driver.Url = "https://www.saucedemo.com";
+        driver.FindElement(By.CssSelector("#user-name")).SendKeys("standard_user");
+        driver.FindElement(By.CssSelector("#password")).SendKeys("secret_sauce");
+        driver.FindElement(By.CssSelector("#login-button")).Click();
+        Thread.Sleep(4000);
 
 
     }
@@ -93,20 +36,49 @@ public class Tests
     [Test]
     public void Test_Invalid_Username_and_Invalid_Password()
     {
-        driver.Url = "https://www.demo.guru99.com/V4/";
-        driver.FindElement(By.CssSelector("body > form > table > tbody > tr:nth-child(1) > td:nth-child(2) > input[type=text]")).SendKeys("invalid");
-        driver.FindElement(By.CssSelector("body > form > table > tbody > tr:nth-child(2) > td:nth-child(2) > input[type=password]")).SendKeys("invalid");
-        driver.FindElement(By.CssSelector("body > form > table > tbody > tr:nth-child(3) > td:nth-child(2) > input[type=submit]:nth-child(1)")).Click();
-        string expectedAlert = "User or Password is not valid";
-        Thread.Sleep(1000);
-        IAlert alert = driver.SwitchTo().Alert();
-        string alertText = alert.Text;
-        Assert.That(expectedAlert, Is.EqualTo(alertText));
-        alert.Accept();
-        var title = driver.Title;
-        Assert.That(title, Is.EqualTo("Guru99 Bank Home Page"));
-
-
+        driver.Url = "https://www.saucedemo.com";
+        driver.FindElement(By.CssSelector("#user-name")).SendKeys("invalid");
+        driver.FindElement(By.CssSelector("#password")).SendKeys("invalid");
+        driver.FindElement(By.CssSelector("#login-button")).Click();
+        Thread.Sleep(4000);
     }
 
+    [Test]
+    public void Test_Login_Add_Two_Items_To_Cart_No_Checkout()
+    {
+        driver.Url = "https://www.saucedemo.com";
+        driver.FindElement(By.CssSelector("#user-name")).SendKeys("standard_user");
+        driver.FindElement(By.CssSelector("#password")).SendKeys("secret_sauce");
+        driver.FindElement(By.CssSelector("#login-button")).Click();
+        driver.FindElement(By.CssSelector("#add-to-cart-sauce-labs-backpack")).Click();
+        driver.FindElement(By.CssSelector("#add-to-cart-sauce-labs-fleece-jacket")).Click();
+        Thread.Sleep(4000);
+    }
+    [Test]
+    public void Test_Login_Add_Two_Items_To_Cart_With_Checkout()
+    {
+        driver.Url = "https://www.saucedemo.com";
+        driver.FindElement(By.CssSelector("#user-name")).SendKeys("standard_user");
+        driver.FindElement(By.CssSelector("#password")).SendKeys("secret_sauce");
+        driver.FindElement(By.CssSelector("#login-button")).Click();
+        driver.FindElement(By.CssSelector("#add-to-cart-sauce-labs-backpack")).Click();
+        driver.FindElement(By.CssSelector("#add-to-cart-sauce-labs-fleece-jacket")).Click();
+        var products = driver.FindElement(By.CssSelector("#shopping_cart_container > a")).Text;
+        Assert.That(products, Is.EqualTo("2"));
+        driver.FindElement(By.CssSelector("#shopping_cart_container > a")).Click();
+        driver.FindElement(By.CssSelector("#checkout")).Click();
+        Thread.Sleep(4000);
+    }
+    [Test]
+    public void Test_Invalid_Username_and_Invalid_Password_With_Failed_Validation()
+    {
+        driver.Url = "https://www.saucedemo.com";
+        driver.FindElement(By.CssSelector("#user-name")).SendKeys("invalid");
+        driver.FindElement(By.CssSelector("#password")).SendKeys("invalid");
+        driver.FindElement(By.CssSelector("#login-button")).Click();
+        Thread.Sleep(4000);
+        var error = driver.FindElement(By.XPath("//*[@id='login_button_container']/div/form/div[3]/h3"));
+        var errorText = error.Text;
+        Assert.That(errorText, Is.EqualTo("Epic sadface: Username and password do not match any user in this service"));
+    }
 }
